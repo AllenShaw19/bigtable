@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+message Column {
+  bytes family = 1;
+  repeated bytes qualifier = 2;
+}
+
+// timestamp in milliseconds
+// from = 0, and to = Long.MAX_VALUE
+message TimeRange {
+  optional uint64 from = 1;
+  optional uint64 to = 2;
+}
+
+message ColumnFamilyTimeRange {
+  bytes column_family = 1;
+  TimeRange time_range = 2;
+}
+
+//
+enum CellType {
+  MINIMUM = 0;
+  PUT = 4;
+
+  DELETE = 8;
+  DELETE_COLUMN = 12;
+  DELETE_FAMILY = 14;
+
+  // MAXIMUM is used when searching; you look from maximum on down.
+  MAXIMUM = 255;
+}
+
+message Cell {
+  bytes row = 1;
+  bytes family = 2;
+  bytes qualifier = 3;
+  uint64 timestamp = 4;
+  CellType cell_type = 5;
+  bytes value = 6;
+  optional bytes tags = 7;
+}
+
+message Comparator {
+  string name = 1;
+  // TODO: compare value
+}

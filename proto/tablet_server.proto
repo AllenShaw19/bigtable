@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bigtable;
+option go_package = "github.com/AllenShaw19/bigtable/proto";
+
+import "common.proto";
+
+
+
+// 服务
+service TabletService {
+  rpc Get(GetReq) returns (GetResp) {}
+  rpc Mutate(MutateReq) returns (MutateResp) {}
+  rpc Scan(ScanReq) returns (ScanResp) {}
+  rpc Multi(MultiReq) returns (MultiResp) {}
+}
