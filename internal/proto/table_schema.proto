@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";
+
+enum StoreMedium {
+    DiskStore = 0;
+    FlashStore = 1;
+    MemoryStore = 2;
+}
+
+enum RawKey {
+    Readable = 0;
+    Binary = 1;
+    TTLKv = 2;      // Key-value-pair with ttl in key
+    GeneralKv = 3;
+}
+
+message ColumnFamilySchema {
+    int32 id = 1;
+    string name = 2;
+    StoreMedium store_type = 3; // default DiskStore
+    bool compress_type = 4;     // default false
+    int32 block_size = 5;  // KB default 4KB
+    bool use_bloom_filter = 6;
+    bool is_del = 7;
+    bool use_memtable_on_leveldb = 8;  // default false
+    int32 memtable_ldb_write_buffer_size = 9; // KB default 1000
+    int32 memtable_ldb_block_size = 10;    // KB default 4
+    int32 sst_size = 11; // Bytes default 8388608
+}
+
+message LocalityGroupSchema {
+    int32 id = 1;
+    string name = 2;
+    string locality_group = 3;
+    int32 owner = 4;
+    repeated int64 acl = 5;
+    int32 max_versions = 6;     // default 1
+    int32 min_versions = 7;     // default 1 
+    int32 time_to_live = 8;     // default 0 单位:秒(0:不过期，<0:提前过期，>0:延后过期)
+    int64 disk_quota = 9;
+    string type = 10;
+    bool gtxb = 11;             // default false global transaction
+    bool notify = 12; 
+}
+
+message TableSchema {
+    int32 id = 1;
+    string name = 2;
+    int32 owner = 3;
+    repeated int32 acl = 4;
+    repeated ColumnFamilySchema column_families = 5;
+    repeated LocalityGroupSchema locality_groups = 6;
+    RawKey raw_key = 7;   // default Readable
+    int64 split_size = 8;   // MB
+    int64 merge_size = 10;  // MB
+    bool disbale_wal = 11;
+    string admin_group = 12; // users in admin_group can admin this table
+    string alias = 13;  
+    string admin = 14;
+    bool enable_txn = 15;
+    bool enbale_hash = 16;
+    uint32 bloom_filter_bits_per_key = 17; // default 10
+}

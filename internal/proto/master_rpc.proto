@@ -1,0 +1,32 @@
+syntax = "proto3"; 
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";
+
+import "table_schema.proto";
+
+message CreateTableReq {
+    uint64 sequence_id = 1;
+    string table_name = 2;
+    optional TableSchema schema = 3;
+}
+
+
+
+service Master {
+    rpc CreateTable(CreateTableReq) returns (CreateTableResp) {}
+    rpc DeleteTable(DeleteTableReq) returns (DeleteTableResp) {}
+    rpc DisableTable(DisableTableReq) returns (DisableTableResp) {} rpc EnableTable(EnableTableReq) returns (EnableTableResp) {}
+    rpc UpdateTable(UpdateTableReq) returns (UpdateTableResp) {}
+    rpc UpdateCheck(UpdateCheckReq) returns (UpdateCheckResp) {}
+    rpc SearchTable(SearchTableReq) returns (SearchTableResp) {}
+
+    rpc ShowTables(ShowTablesReq) returns (ShowTablesResp) {}
+    rpc ShowTabletNodes(ShowTabletNodesReq) returns (ShowTabletNodesResp) {}
+
+    rpc Register(RegisterReq) returns (RegisterResp) {}
+    rpc Report(ReportReq) returns (ReportResp) {}
+
+    rpc CmdCtrl(CmdCtrlReq) returns (CmdCtrlResp) {}
+    rpc OperateUser(OperateUserReq) returns (OperateUserResp) {}
+}
