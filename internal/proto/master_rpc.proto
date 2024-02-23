@@ -4,13 +4,12 @@ package bigtable;
 option go_package = "github.com/allen-shaw/bigtable/internal/proto";
 
 import "table_schema.proto";
+import "table_meta.proto";
 
 message CreateTableReq {
     string table_name = 1;
     optional TableSchema schema = 2;
     repeated bytes delimiters = 3;
-    optional bytes user_token = 4;
-    optional IdentityInfo identity_info = 5; 
 }
 message CreateTableResp {
     optional TabletMetaList meta_list = 1;
@@ -18,27 +17,49 @@ message CreateTableResp {
 
 message DeleteTableReq {
     string table_name = 1;
-    optional bytes user_token = 4;
-    optional IdentityInfo identity_info = 5;  
 }
 message DeleteTableResp {}
 
 message DisableTableReq {
     string table_name = 1;
-    optional bytes user_token = 4;
-    optional IdentityInfo identity_info = 5;   
 }
 message DisableTableResp {}
 
 message EnableTableReq {
     string table_name = 1;
-    optional bytes user_token = 4;
-    optional IdentityInfo identity_info = 5;    
 }
 message EnableTableResp {}
 
+message UpdateTableReq {
+    string table_name = 1;
+    optional TableSchema schema = 2;
+}
+message UpdateTableResp {}
 
+message UpdateCheckReq {
+    string table_name = 1;
+}
+message UpdateCheckResp {
+    optional bool done = 1;
+}
 
+message SearchTableReq {
+    string prefix_table_name = 1;
+    optional string start_table_name = 2;
+    optional bytes start_tablet_key = 3;
+    optional uint32 max_num = 4;
+}
+message SearchTableResp {
+    optional TabletMetaList meta_list = 1;
+    optional bool is_more = 2;
+}
+
+message ShowTablesReq {
+    
+}
+message ShowTablesResp {
+
+}
 
 service Master {
     rpc CreateTable(CreateTableReq) returns (CreateTableResp) {}
