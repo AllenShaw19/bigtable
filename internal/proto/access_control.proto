@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";
+
+enum AuthPolicyType {
+    NoneAuthPolicy = 1;
+    UgiAuthPolicy = 2;
+}
+
+// User-Group-Role-Permission 一个用户可以属于多个组，有多个Role
+message IdentityInfo {
+    AuthPolicyType auth_policy_type = 1;
+    string name = 2;
+    bytes token = 3;
+    string ip_addr = 4;
+}

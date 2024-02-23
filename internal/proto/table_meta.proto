@@ -1,0 +1,72 @@
+syntax = "proto3"; 
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";
+
+import "table_schema.proto";
+
+message KeyRange {
+    optional bytes key_start = 1;
+    optional bytes key_end = 2;
+}
+
+message TabletCounter {
+    optional uint32 low_read_cell = 1;
+    optional uint32 scan_rows = 2;
+    optional uint32 scan_kvs = 3;
+    optional uint32 scan_size = 4;
+    optional uint32 read_rows = 5;
+    optional uint32 read_kvs = 6;
+    optional uint32 read_size = 7;
+    optional uint32 write_rows = 8;
+    optional uint32 write_kvs = 9;
+    optional uint32 write_size = 10;
+    optional double write_workload = 11;
+  
+    optional bool is_on_busy = 15;
+    optional TabletMeta.TabletStatus db_status = 16;
+}
+
+message TabletMeta {
+    enum TabletStatus {
+        TabletNotInit = 1;
+        TabletReady = 2;
+        TabletLoading = 3;
+        TabletOnSplit = 4;
+        // TabletUnload = 5;
+        TabletMerged = 6;
+        TabletSplitted = 7;
+        TabletUnloading = 8;
+        TabletOffline = 9;
+        TabletLoadFail = 10;
+        TabletUnloadFail = 11;
+        TabletDisable = 12;
+        TabletDelayOffline = 13;
+        TabletUnloading2 = 14;
+        TabletCorruption = 15;
+        TabletManifestError = 16;
+    };
+    string table_name = 1;
+    string path = 2;
+    KeyRange key_range = 3;
+    optional string server_addr = 4;
+    optional TabletStatus status = 5;
+    optional int64 size = 6;
+    optional bool compress = 7;
+    optional CompactStatus compact_status = 8;
+    optional StoreMedium store_medium = 9;
+    uint64 parent_tablets = 12;
+    int64 lg_size = 13;
+    optional int64 last_move_time_us = 15;
+    optional int64 data_size_on_flash = 16;
+    optional int64 create_time = 17;
+    optional uint64 version = 18;
+}
+
+
+
+message TabletMetaList {
+    repeated TabletMeta meta = 1;
+    repeated TabletCounter counter = 2;
+    repeated int64 timestamp = 3;
+}
