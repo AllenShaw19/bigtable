@@ -5,6 +5,14 @@ option go_package = "github.com/allen-shaw/bigtable/internal/proto";
 
 enum StatusCode {
     OK = 0;
+    // master status
+    MasterNotInited = 12;
+    MasterIsBusy = 13;
+    MasterIsSecondary = 14;
+    MasterIsReadonly = 15;
+    MasterOnRestore = 16;
+    MasterOnWait = 17;
+    MasterIsRunning = 19;
 }
 
 

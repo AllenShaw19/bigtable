@@ -1,6 +1,7 @@
 package master
 
 import (
+	pb "github.com/allen-shaw/bigtable/internal/proto"
 	"github.com/allen-shaw/bigtable/internal/util"
 )
 
@@ -19,5 +20,23 @@ type Master struct {
 	sequenceID util.Counter
 
 	// access entry
+
+}
+
+func NewMaster() *Master {
+	m := &Master{}
+
+	m.stateMachine = NewMasterStateMachine(IsSecondary)
+	
+	m.tabletManager = n
+
+	return m
+}
+
+func (m *Master) Init() error {
+
+}
+
+func (m *Master) CreateTable(req *pb.CreateTableReq) (*pb.CreateTableResp, error) {
 
 }
