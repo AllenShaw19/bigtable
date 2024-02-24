@@ -4,10 +4,31 @@ package bigtable;
 option go_package = "github.com/allen-shaw/bigtable/internal/proto";
 
 import "table_schema.proto";
+import "status_code.proto";
+import "access_control.proto";
 
 message KeyRange {
     optional bytes key_start = 1;
     optional bytes key_end = 2;
+}
+
+// TODO:应该改名为Metric更好？
+message TableCounter {
+    optional int64 lread = 1;
+    optional int64 scan_rows = 2;
+    optional int64 scan_max = 3;
+    optional int64 scan_size = 4;
+    optional int64 read_rows = 5;
+    optional int64 read_max = 6;
+    optional int64 read_size = 7;
+    optional int64 write_rows = 8;
+    optional int64 write_max = 9;
+    optional int64 write_size = 10;
+  
+    optional int64 tablet_num = 20;
+    optional int64 notready_num = 21;
+    optional int64 size = 22;
+    repeated int64 lg_size = 23;
 }
 
 message TabletCounter {
@@ -27,8 +48,17 @@ message TabletCounter {
     optional TabletMeta.TabletStatus db_status = 16;
 }
 
+message TableMeta {
+    optional string table_name = 1;
+    optional TableStatus status = 2;
+    optional TableSchema schema = 3;
+    optional uint64 create_time = 5;
+    optional AuthPolicyType auth_policy_type = 8;
+}
+
 message TabletMeta {
     enum TabletStatus {
+        TabletUnknown = 0;
         TabletNotInit = 1;
         TabletReady = 2;
         TabletLoading = 3;
@@ -54,7 +84,7 @@ message TabletMeta {
     optional int64 size = 6;
     optional bool compress = 7;
     optional CompactStatus compact_status = 8;
-    optional StoreMedium store_medium = 9;
+    optional StoreMedium store_medium = 9;      /// default:DiskStore
     uint64 parent_tablets = 12;
     int64 lg_size = 13;
     optional int64 last_move_time_us = 15;
@@ -64,7 +94,11 @@ message TabletMeta {
 }
 
 
-
+message TableMetaList {
+    repeated TableMeta meta = 1;
+    repeated TableCounter counter = 2;
+}
+  
 message TabletMetaList {
     repeated TabletMeta meta = 1;
     repeated TabletCounter counter = 2;

@@ -1,0 +1,4 @@
+syntax = "proto3";
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";

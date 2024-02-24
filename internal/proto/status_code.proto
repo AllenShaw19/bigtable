@@ -3,8 +3,21 @@ syntax = "proto3";
 package bigtable;
 option go_package = "github.com/allen-shaw/bigtable/internal/proto";
 
+enum StatusCode {
+    OK = 0;
+}
+
+
 enum CompactStatus {
+    TabletUnknown = 0;
     TableNotCompact = 1;
     TableOnCompact = 2;
     TableCompacted = 3;
+}
+
+enum TableStatus {
+    TableUnknown = 0;
+    TableEnable = 1000;
+    TableDisable = 1001;
+    TableDeleting = 1002;
 }

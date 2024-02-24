@@ -4,8 +4,8 @@ package bigtable;
 option go_package = "github.com/allen-shaw/bigtable/internal/proto";
 
 enum AuthPolicyType {
-    NoneAuthPolicy = 1;
-    UgiAuthPolicy = 2;
+    NoneAuthPolicy = 0;
+    UgiAuthPolicy = 1;
 }
 
 // User-Group-Role-Permission 一个用户可以属于多个组，有多个Role

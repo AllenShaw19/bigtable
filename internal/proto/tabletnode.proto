@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package bigtable;
+option go_package = "github.com/allen-shaw/bigtable/internal/proto";
+
+import "status_code.proto";
+
+message ExtraTsInfo {
+    optional string name = 1;
+    optional uint64 value = 2;
+}
+
+message TabletNodeInfo {
+    string addr = 1;
+
+    optional StatusCode status = 2;
+    optional uint64 load = 3;
+    optional uint64 timestamp = 4;
+    optional uint32 tablet_total = 5;
+    optional uint32 tablet_onbusy = 6;
+    optional uint32 tablet_corruption = 7;
+  
+    optional uint32 low_read_cell = 11;
+    optional uint32 scan_rows = 12;
+    optional uint32 scan_kvs = 13;
+    optional uint32 scan_size = 14;
+    optional uint32 read_rows = 15;
+    optional uint32 read_kvs = 16;
+    optional uint32 read_size = 17;
+    optional uint32 write_rows = 18;
+    optional uint32 write_kvs = 19;
+    optional uint32 write_size = 20;
+  
+    optional uint64 mem_used = 21;
+    optional uint32 net_tx = 22;
+    optional uint32 net_rx = 23;
+    optional uint32 dfs_io_r = 24 ;
+    optional uint32 dfs_io_w = 25 ;
+    optional uint32 local_io_r = 26;
+    optional uint32 local_io_w = 27;
+    optional uint32 dfs_master_qps = 28 ; // Operations through dfs's master, including close, open, delete
+  
+    optional string status_msg = 31;
+    optional uint32 tablet_onload = 32;
+    optional uint32 tablet_onsplit = 33;
+    optional uint32 tablet_unloading = 34;
+  
+    repeated ExtraTsInfo extra_info = 40;
+  
+    optional uint32 read_pending = 41;
+    optional uint32 write_pending = 42;
+    optional uint32 scan_pending = 43;
+  
+    optional float cpu_usage = 44;
+    optional int64 process_start_time = 45;  // Unix time in us
+  
+    optional uint64 persistent_cache_size = 46;
+  }
