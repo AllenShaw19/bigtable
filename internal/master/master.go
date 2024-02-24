@@ -1,6 +1,8 @@
 package master
 
-import "github.com/allen-shaw/bigtable/internal/common"
+import (
+	"github.com/allen-shaw/bigtable/internal/util"
+)
 
 type Master struct {
 	stateMachine MasterStateMachine
@@ -14,7 +16,7 @@ type Master struct {
 	// election
 
 	//
-	sequenceID common.Counter
+	sequenceID util.Counter
 
 	// access entry
 
