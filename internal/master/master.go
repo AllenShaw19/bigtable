@@ -27,16 +27,19 @@ func NewMaster() *Master {
 	m := &Master{}
 
 	m.stateMachine = NewMasterStateMachine(IsSecondary)
-	
-	m.tabletManager = n
+
+	// m.tabletManager = n
 
 	return m
 }
 
 func (m *Master) Init() error {
 
+	return nil
 }
 
 func (m *Master) CreateTable(req *pb.CreateTableReq) (*pb.CreateTableResp, error) {
 
+	resp := &pb.CreateTableResp{}
+	return resp, nil
 }
