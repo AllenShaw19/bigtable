@@ -19,3 +19,7 @@ type Tablet struct {
 	dataSizeOnFlash int64
 	serverID        string
 }
+
+type MetaTablet struct {
+	*Table
+}
