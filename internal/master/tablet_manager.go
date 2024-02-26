@@ -32,7 +32,9 @@ func (tm *TabletManager) Destory() {
 }
 
 func (tm *TabletManager) CreateTable(meta *pb.TabletMeta) *Table {
+	t := &Table{}
 
+	return t
 }
 
 func (tm *TabletManager) ClearTableList() {
