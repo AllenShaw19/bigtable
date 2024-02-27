@@ -8,5 +8,6 @@ import (
 type TabletStatus pb.StatusCode
 
 type TabletIO struct {
-	db *pebble.DB
+	db         *pebble.DB
+	ldbOptions pebble.Options
 }
